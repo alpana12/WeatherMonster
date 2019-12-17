@@ -1,70 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 //import the connect and bindActionsCreators functions
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 
-//import the action
-import {fetchAPIResponse} from "../actions/fetch_api_data";
+//import weather data for cities
+import CityList from './CityList.js';
+import { getCities, addCityToCard, removeCityFromList } from '../actions/WeatherActions';
+import Card from './card';
 
-class Main extends Component {
-  constructor(){
-    super();
-    this.state = {
-      value: ""
+class Main extends React.Component {
+    componentDidMount() {
+        this.props.getCities();
     }
-  }
 
-  componentWillMount= () =>{
-     //this.props.FetchAPIResponse("Paris");
-  }
-
-  //search function
-  search = () =>{
-    //this.props.FetchAPIResponse(this.state.value);
-  }
-
-  changeHandler = (e) =>{
-    let value= e.target.value;
-    this.setState({
-      value : value
-    });
-    
-  }
-
-  render() {
-    return (
-      <div>
-           <div className="form">
-            <input name="city" placeholder="New York" onChange ={this.changeHandler} />
-            <button onClick={this.search}> <i className="fas fa-search"></i> </button>
-          </div>
-        <div className="dashboard">
-            <div className="data-container">
-            <div className="square">
-                <p>City</p>
-                <p className="data">{this.props.apiLocation[0]}</p>
-                <p>Feels like</p>
-                <p className="data">{this.props.apiResponse[16]} °F</p>
-            </div>  
-		    </div>
-        </div>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <>
+                <CityList cities={this.props.cities} weatherData={this.props.weatherDataList} addCityToList={this.props.addCityToList} />
+                <Card weatherData={this.props.weatherDataList} removeCityFromList={this.props.removeCityFromList}/>
+            </>
+        );
+    }
 }
 
-
-function mapStateToProps(state){
-  return{
-    apiResponse: state.FetchWeatherReducer.weatherData,
-    apiLocation : state.FetchWeatherLocation.location,
-    apiConditions: state.FetchCurrentConditions.conditions
-  }
+function mapStateToProps(state) {
+    return {
+        cities: state.WeatherReducers.cities,
+        weatherDataList: state.WeatherReducers.weatherDataList
+    }
 }
 
-function matchDispatchToProps(dispatch){
- // return bindActionCreators({FetchAPIResponse:fetchAPIResponse}, dispatch);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getCities: getCities,
+        addCityToList: addCityToCard,
+        removeCityFromList: removeCityFromList
+    }, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

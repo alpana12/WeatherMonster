@@ -1,20 +1,14 @@
-import React, { Component } from 'react';
-import Main from "./components/main";
-import StoreRef from "./store/store";
-import {Provider} from "react-redux";
+import React from 'react';
+import './App.css';
+import Main from './components/main';
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={StoreRef}>
-        <div className="container">
-          <h1>Weather Monster </h1>
-          <Main />
-        
-        </div>
-      </Provider>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <h1 data-test="Logo">Weather Monster</h1>
+      <Main />
+    </div>
+  );
 }
 
 export default App;
