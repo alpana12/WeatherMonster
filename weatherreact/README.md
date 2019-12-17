@@ -1,3 +1,10 @@
+This project works for the following cities:
+
+"Pune", "Delhi", "Boston", "Phoenix", "Sacramento", "Denver", "Nashville", "Houston", "Miami", "New York", "Honolulu", "Juneau","Paris"
+
+Displays temperature in Celsius and Fahrenheit
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
